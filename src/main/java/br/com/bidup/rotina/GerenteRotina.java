@@ -13,7 +13,7 @@ public class GerenteRotina {
         this.serviceRotinaContrato = serviceRotinaContrato;
     }
 
-    @Scheduled(initialDelay = 60000, fixedRate = Long.MAX_VALUE)
+    @Scheduled(initialDelay = 30000, fixedRate = Long.MAX_VALUE)
     public void executaCarga() throws InterruptedException {
         if (!isRunning){
             isRunning = true;
