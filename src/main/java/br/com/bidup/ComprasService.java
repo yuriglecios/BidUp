@@ -1,5 +1,6 @@
 package br.com.bidup;
 
+import br.com.bidup.model.Contratos;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,7 +19,7 @@ public class ComprasService {
         this.restTemplateConfiguration = restTemplateConfiguration;
     }
 
-    public List<ComprasDto> getCompras(
+    public List<Contratos> getCompras(
             Integer pagina,
             Integer tamanhoPagina,
             String dataPublicacaoPncpInicial,

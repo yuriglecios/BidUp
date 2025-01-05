@@ -1,12 +1,12 @@
 package br.com.bidup;
 
-import lombok.Data;
+import br.com.bidup.model.Contratos;
 
 import java.util.List;
 
 public class ComprasReturn {
 
-    private List<ComprasDto> resultado;
+    private List<Contratos> resultado;
 
     private Integer  totalRegistros;
 
@@ -14,11 +14,11 @@ public class ComprasReturn {
 
     private Integer paginasRestantes;
 
-    public List<ComprasDto> getResultado() {
+    public List<Contratos> getResultado() {
         return resultado;
     }
 
-    public void setResultado(List<ComprasDto> resultado) {
+    public void setResultado(List<Contratos> resultado) {
         this.resultado = resultado;
     }
 

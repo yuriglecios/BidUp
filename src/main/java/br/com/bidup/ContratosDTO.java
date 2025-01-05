@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-public class ComprasDto {
+public class ContratosDTO {
     @JsonProperty("idCompra")
     private String idCompra;
 

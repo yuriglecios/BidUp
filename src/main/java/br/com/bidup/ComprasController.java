@@ -1,5 +1,6 @@
 package br.com.bidup;
 
+import br.com.bidup.model.Contratos;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,7 @@ public class ComprasController {
     }
 
     @GetMapping
-    public List<ComprasDto> getCompras(
+    public List<Contratos> getCompras(
         @RequestParam(name = "pagina") Integer pagina,
         @RequestParam(name = "tamanhoPagina") Integer tamanhoPagina,
         @RequestParam(name = "dataPublicacaoPncpInicial") String dataPublicacaoPncpInicial,
