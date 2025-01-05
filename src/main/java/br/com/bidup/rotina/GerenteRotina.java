@@ -14,7 +14,7 @@ public class GerenteRotina {
     }
 
     @Scheduled(initialDelay = 60000, fixedRate = Long.MAX_VALUE)
-    public void executaCarga(){
+    public void executaCarga() throws InterruptedException {
         if (!isRunning){
             isRunning = true;
             serviceRotinaContrato.executaCarga();

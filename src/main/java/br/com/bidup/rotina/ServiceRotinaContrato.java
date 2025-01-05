@@ -7,8 +7,11 @@ import br.com.bidup.model.Contratos;
 import br.com.bidup.repository.ContratosRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,15 +32,15 @@ public class ServiceRotinaContrato {
         this.restTemplateConfiguration = restTemplateConfiguration;
     }
 
-    public void executaCarga(){
+    public void executaCarga() throws InterruptedException {
 
-        Integer paginaAtual = 1;
+        int paginaAtual = 1;
         Integer paginasRestantes;
 
         do {
-            log.info("iniciando");
+            log.info("Iniciando requisição da página " + paginaAtual);
             Map<String, String> parametros = new HashMap<>();
-            parametros.put("pagina", paginaAtual.toString());
+            parametros.put("pagina", Integer.toString(paginaAtual));
             parametros.put("tamanhoPagina", "500");
             parametros.put("dataPublicacaoPncpInicial", "2023-01-01");
             parametros.put("dataPublicacaoPncpFinal", "2023-01-31");
@@ -57,13 +60,28 @@ public class ServiceRotinaContrato {
             }
             paginasRestantes = compras.getPaginasRestantes();
             paginaAtual ++;
+            Thread.sleep(1000);
         }
         while (paginasRestantes != null && paginasRestantes > 0);
 
     }
 
-    private void salva(List<Contratos> contratos){
-        contratosRepository.saveAll(contratos);
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void salva(List<Contratos> contratos){
+
+        List<Contratos> contratosAptos = new ArrayList<>();
+
+        for (Contratos contrato : contratos){
+
+            Contratos contratoRecebido = contratosRepository.findById(contrato.getId()).orElse(null);
+            if (contratoRecebido == null || !contratoRecebido.equals(contrato)){
+                contratosAptos.add(contrato);
+            }
+
+        }
+
+        contratosRepository.saveAll(contratosAptos);
+        log.info("Contratos salvos");
     }
 
 }
