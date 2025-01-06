@@ -41,12 +41,12 @@ public class ServiceRotinaContrato {
         Integer totalPaginas = 0;
 
         do {
-            log.info("Iniciando requisição da página " + paginaAtual + " de " + totalPaginas);
+            log.info("Iniciando requisição da página " + paginaAtual);
             Map<String, String> parametros = new HashMap<>();
             parametros.put("pagina", Integer.toString(paginaAtual));
             parametros.put("tamanhoPagina", "500");
-            parametros.put("dataPublicacaoPncpInicial", "2024-01-01");
-            parametros.put("dataPublicacaoPncpFinal", "2024-01-31");
+            parametros.put("dataPublicacaoPncpInicial", "2022-04-01");
+            parametros.put("dataPublicacaoPncpFinal", "2022-12-31");
             parametros.put("codigoModalidade", "6");
 
             String urlConsulta = UriComponentsBuilder.fromHttpUrl(baseUrl)
@@ -58,33 +58,26 @@ public class ServiceRotinaContrato {
                     .build().toUriString();
 
             ComprasReturn compras = restTemplateConfiguration.restTemplate().getForObject(urlConsulta, ComprasReturn.class);
+            log.info("Requisição finalizada");
             if (compras != null){
                 salva(compras.getResultado());
             }
             paginasRestantes = compras.getPaginasRestantes();
             totalPaginas = compras.getTotalPaginas();
             paginaAtual ++;
+            log.info("Restam " + totalPaginas + " páginas");
+            Thread.sleep(15000);
         }
         while (paginasRestantes != null && paginasRestantes > 0);
-
+        log.info("Rotina finalizada");
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void salva(List<Contratos> contratos){
 
-        List<Contratos> contratosAptos = new ArrayList<>();
+        contratosRepository.saveAll(contratos);
+        log.info(contratos.size() + " contratos salvos");
 
-        for (Contratos contrato : contratos){
-
-            Contratos contratoRecebido = contratosRepository.findByIdCompra(contrato.getIdCompra());
-            if (contratoRecebido == null || !contratoRecebido.equals(contrato)){
-                contratosAptos.add(contrato);
-            }
-
-        }
-
-        contratosRepository.saveAll(contratosAptos);
-        log.info("Contratos salvos");
     }
 
 }

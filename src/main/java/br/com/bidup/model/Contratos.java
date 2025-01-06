@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TAB_CONTRATOS")
-@Data
-@NoArgsConstructor
 public class Contratos {
 
     @Id
@@ -124,6 +122,9 @@ public class Contratos {
     private LocalDateTime dataEncerramentoPropostaPncp;
     
     private boolean existeItem;
+
+    public Contratos() {
+    }
 
     public Contratos(String idCompra, String numeroControlePNCP, Integer anoCompraPncp, Integer sequencialCompraPncp, String orgaoEntidadeCnpj, String orgaoSubrogadoCnpj, Integer codigoOrgao, String orgaoEntidadeRazaoSocial, String orgaoSubrogadoRazaoSocial, String orgaoEntidadeEsferaId, String orgaoSubrogadoEsferaId, String orgaoEntidadePoderId, String orgaoSubrogadoPoderId, String unidadeOrgaoCodigoUnidade, String unidadeSubrogadaCodigoUnidade, String unidadeOrgaoNomeUnidade, String unidadeSubrogadaNomeUnidade, String unidadeOrgaoUfSigla, String unidadeSubrogadaUfSigla, String unidadeOrgaoMunicipioNome, String unidadeSubrogadaMunicipioNome, Integer unidadeOrgaoCodigoIbge, String unidadeSubrogadaCodigoIbge, String numeroCompra, Integer modalidadeIdPncp, Integer codigoModalidade, String modalidadeNome, boolean srp, Integer modoDisputaIdPncp, Integer codigoModoDisputa, Integer amparoLegalCodigoPncp, String amparoLegalNome, String amparoLegalDescricao, String informacaoComplementar, String processo, String objetoCompra, boolean existeResultado, Integer orcamentoSigilosoCodigo, String orcamentoSigilosoDescricao, Integer situacaoCompraIdPncp, String situacaoCompraNomePncp, Integer tipoInstrumentoConvocatorioCodigoPncp, String tipoInstrumentoConvocatorioNome, String modoDisputaNomePncp, BigDecimal valorTotalEstimado, BigDecimal valorTotalHomologado, LocalDateTime dataInclusaoPncp, LocalDateTime dataAualizacaoPncp, LocalDateTime dataPublicacaoPncp, LocalDateTime dataAberturaPropostaPncp, LocalDateTime dataEncerramentoPropostaPncp) {
         this.idCompra = idCompra;
